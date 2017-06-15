@@ -8,18 +8,6 @@ function updateChar(str,index,char) {
 	return str.substr(0,index) + char + str.substr(index+1);
 }
 
-// Begin round
-// var lives = 12;
-// var screen = "";
-// var guessed = [];
-// var failed = [];
-
-// var answer = bank[Math.floor(Math.random() * bank.length)];
-// console.log(answer);
-// for (var i = 0; i < answer.length; i++) {
-// 	screen += "_ "
-// }
-
 function reset() {
 	lives = 12;
 	screen = "";
@@ -76,6 +64,13 @@ function changePic(img_name) {
 	document.getElementById('pic').innerHTML = "<img src='" + img_name + "' style='width: 100%;'>"
 }
 
+function endGame() {
+	alert("Congratulations, you beat the game!")
+	usedWords = []
+	wins = 0
+	document.getElementById('score').textContent = wins
+	document.getElementById('pic').innerHTML = "<img class='img70' src='assets/images/popstar.jpg'>"
+}
 // game logic
 
 document.onkeyup = function(event) {
@@ -92,21 +87,28 @@ document.onkeyup = function(event) {
 				}
 			}
 			if (screen.includes("_") === false) {
-				// Win script
-				console.log("You win!")
+				// When word is guessed
 				wins++
-				// alert("You Win! Answer: " + answer)
+				document.getElementById('score').textContent = wins
 				changePic(selectPic())
+				answer = answer.toUpperCase()
+				console.log(answer)
+				// document.getElementById('display').textContent = screen
+				document.getElementById('display').innerHTML = "<strong>" + answer + "!</strong>"
+				document.getElementById('lives').textContent = wins
+
+				// alert("You Win! Answer: " + answer)
+
+	
 				// End game
 				if (usedWords.length === bank.length) {
-					alert("Congratulations, you beat the game!")
-					usedWords = []
-					wins = 0
-					document.getElementById('pic').innerHTML = "<img class='img70' src='assets/images/popstar.jpg'>"
+					setTimeout(endGame,2000)
 				}
-				reset()
-				refresh()
-				document.getElementById('score').textContent = wins
+
+				setTimeout(reset, 2000)
+				setTimeout(refresh, 2000)
+				// reset()
+				// refresh()
 
 				return
 			}
