@@ -1,6 +1,6 @@
 var bank = ["enrique", "ariana", "pitbull", "adele", "chainsmokers"];
 var wins = 0;
-
+var usedWords = [];
 
 
 function updateChar(str,index,char) {
@@ -28,9 +28,22 @@ function reset() {
 
 	answer = bank[Math.floor(Math.random() * bank.length)];
 	console.log(answer);
+
+	// check if word has already been used
+	if (usedWords.includes(answer)) {
+		console.log("Word used")
+		reset();
+		return
+	}
+
+	// add word to usedWords
+	usedWords.push(answer);
+	console.log(usedWords);
+
+	// create display
 	for (var i = 0; i < answer.length; i++) {
 		screen += "_ "
-	}
+	};
 	console.log(screen)
 }
 
@@ -63,6 +76,8 @@ function changePic(img_name) {
 	document.getElementById('pic').innerHTML = "<img src='" + img_name + "' style='width: 100%;'>"
 }
 
+// game logic
+
 document.onkeyup = function(event) {
 	var key = event.key
 	if (guessed.includes(key)) {
@@ -80,8 +95,15 @@ document.onkeyup = function(event) {
 				// Win script
 				console.log("You win!")
 				wins++
-				alert("You Win! Answer: " + answer)
+				// alert("You Win! Answer: " + answer)
 				changePic(selectPic())
+				// End game
+				if (usedWords.length === bank.length) {
+					alert("Congratulations, you beat the game!")
+					usedWords = []
+					wins = 0
+					document.getElementById('pic').innerHTML = "<img class='img70' src='assets/images/popstar.jpg'>"
+				}
 				reset()
 				refresh()
 				document.getElementById('score').textContent = wins
