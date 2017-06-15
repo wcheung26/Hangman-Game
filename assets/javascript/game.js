@@ -2,6 +2,10 @@ var bank = ["enrique", "ariana", "pitbull", "adele", "chainsmokers"];
 var wins = 0;
 var usedWords = [];
 
+var	lives = 12;
+var	screen = "";
+var	guessed = [];
+var	failed = [];
 
 function updateChar(str,index,char) {
 	if(index > str.length-1) return str;
@@ -45,7 +49,6 @@ reset();
 refresh();
 
 // Images for left panel
-
 function selectPic() {
 	if (answer === "enrique") {
 		return "assets/images/enrique.jpg"
@@ -60,8 +63,27 @@ function selectPic() {
 	}
 }
 
+function selectMusic() {
+	if (answer === "enrique") {
+		return "<iframe width='100%' height='300' scrolling='no' frameborder='no' src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/146237647&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true'></iframe>"
+	} else if (answer === "ariana") {
+		return "<iframe width='100%' height='300' scrolling='no' frameborder='no' src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/171229652&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true'></iframe>"
+	} else if (answer === "pitbull") {
+		return "<iframe width='100%' height='300' scrolling='no' frameborder='no' src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/190628327&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true'></iframe>"
+	} else if (answer === "adele") {
+		return "<iframe width='100%' height='300' scrolling='no' frameborder='no' src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/10272815&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true'></iframe>"
+	} else {
+		return "<iframe width='100%' height='300' scrolling='no' frameborder='no' src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/250711755&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true'></iframe>"
+	}
+}
+
 function changePic(img_name) {
 	document.getElementById('pic').innerHTML = "<img src='" + img_name + "' style='width: 100%;'>"
+}
+
+function changeMusic(song_name) {
+	var song = selectMusic();
+	document.getElementById('music').innerHTML = song
 }
 
 function endGame() {
@@ -88,14 +110,16 @@ document.onkeyup = function(event) {
 			}
 			if (screen.includes("_") === false) {
 				// When word is guessed
-				wins++
-				document.getElementById('score').textContent = wins
-				changePic(selectPic())
-				answer = answer.toUpperCase()
-				console.log(answer)
+				wins++;
+				document.getElementById('score').textContent = wins;
+				changePic(selectPic());
+				changeMusic();
+				console.log("Play music");
+				answer = answer.toUpperCase();
+				console.log(answer);
 				// document.getElementById('display').textContent = screen
-				document.getElementById('display').innerHTML = "<strong>" + answer + "!</strong>"
-				document.getElementById('lives').textContent = wins
+				document.getElementById('display').innerHTML = "<strong>" + answer + "!</strong>";
+				document.getElementById('lives').textContent = wins;
 
 				// alert("You Win! Answer: " + answer)
 
